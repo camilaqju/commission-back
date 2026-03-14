@@ -1,7 +1,3 @@
-username: camilaqj
-password: 123
-
----
 - `python -m venv venv`
 
 Ativar o ambiente virtual
