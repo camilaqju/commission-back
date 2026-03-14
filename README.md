@@ -15,7 +15,8 @@ Sair do modo venv
 - `deactivate`
 
 ---
-comission/
+```
+comission-back/
 ├── .env                # Variáveis sensíveis (senhas, chaves de API, DB_URL). Nunca vai para o Git.
 ├── .gitignore          # Lista de arquivos/pastas que o Git deve ignorar (ex: venv, __pycache__, .env).
 ├── launch.json         # Configuração de Debug do VS Code (permite apertar F5 para debugar a API).
@@ -40,7 +41,7 @@ comission/
                 ├── health-check.py # Rota simples para verificar se o servidor está vivo (UP/DOWN).
                 ├── products.py     # Endpoints relacionados a produtos (GET, POST, etc).
                 └── users.py        # Endpoints relacionados a usuários (Cadastro, Login).
-
+```
 ---
 
 🚀 Estrutura de Automação do Projeto (FastAPI)
