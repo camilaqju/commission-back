@@ -1,0 +1,15 @@
+[tool.taskipy.tasks]
+# Instala as dependências que já estão na lista (requirements)
+install = "pip install -r requirements.txt"
+
+# Salva as novas bibliotecas que você instalou manualmente na lista
+save = "pip freeze > requirements.txt"
+
+# Roda o servidor com auto-reload para desenvolvimento
+run = "bash start.sh"
+
+# Roda o servidor em modo "produção" (sem reload, mais estável)
+start = "bash start.sh"
+
+# Roda os testes (quando você tiver a pasta /tests)
+test = "pytest"
