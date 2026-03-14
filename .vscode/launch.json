@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run: FastAPI",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "app.main:app",
+        "--host", "localhost",
+        "--reload",
+        "--reload-dir", "app",
+        "--port", "3000"
+      ],
+      "envFile": "${workspaceFolder}/.env",
+      "python": "${workspaceFolder}/venv/Scripts/python.exe",
+      "console": "integratedTerminal"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 - `python -m venv venv`
 
 Ativar o ambiente virtual
-- `source venv/Scripts/activate`
+- `.\venv\Scripts\Activate.ps1`
 
 exibe no terminal (venv) camilaqj@Camis:~/personal/comission$
 
@@ -13,6 +13,12 @@ Instalar requirements
 
 Sair do modo venv
 - `deactivate`
+
+Remover venv
+- `Remove-Item -Recurse -Force .\venv`
+
+Atualizar requiments.txt após instalar uma dependencias
+- `pip freeze > requirements.txt`
 
 ---
 ```
