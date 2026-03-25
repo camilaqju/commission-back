@@ -114,3 +114,21 @@ api/ -> Onde ficam os arquivos de rotas.
 pyproject.toml -> Arquivo de scripts (este documento).
 
 requirements.txt -> Lista de dependências.
+
+
+
+```
+const formdata = new FormData();
+formdata.append("file", fileInput.files[0], "/C:/Users/camil/Downloads/comissao.xlsx");
+
+const requestOptions = {
+  method: "POST",
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch("https://commission-back.onrender.com/api/v1/upload/file", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
+```
