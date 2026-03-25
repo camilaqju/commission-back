@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from fastapi import UploadFile, HTTPException
 
-def read_excel(file: UploadFile) -> dict:
+def read_excel(file: UploadFile, taxa_comissao: float) -> dict:
     """Lê um arquivo Excel e retorna algumas informações"""
     if not file.filename.endswith((".xls", ".xlsx")):
         raise HTTPException(status_code=400, detail="Arquivo deve ser XLS ou XLSX")
@@ -11,7 +11,7 @@ def read_excel(file: UploadFile) -> dict:
     try:
         df = pd.read_excel(file.file)
 
-        df['taxa_comissao'] = 0.002
+        df['taxa_comissao'] = taxa_comissao
         df['comissao_calculada'] = df['taxa_comissao'] * df['Total']
         # Condições de pagamento atualizadas
         condicoes_pagamento = {
