@@ -9,7 +9,7 @@ Instalar o taskipy
 - `pip install taskipy`
 
 Instalar requirements
-- `pip install -r requirements.txt`
+- `pip install -r requirements-dev.txt`
 
 Sair do modo venv
 - `deactivate`
@@ -18,7 +18,7 @@ Remover venv
 - `Remove-Item -Recurse -Force .\venv`
 
 Atualizar requiments.txt após instalar uma dependencias
-- `pip freeze > requirements.txt`
+- `pip freeze > requirements-dev.txt`
 
 ---
 ```
