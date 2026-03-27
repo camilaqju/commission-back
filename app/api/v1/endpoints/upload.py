@@ -3,10 +3,11 @@ from fastapi import APIRouter, UploadFile, File, Form, HTTPException
 import re
 
 from app.api.v1.services.upload_service import read_excel
+from app.api.v1.schemas.models import UploadResponse
 
 router = APIRouter()
 
-@router.post("/file", tags=["Files"])
+@router.post("/file", response_model=UploadResponse, tags=["Files"])
 async def upload(
     file: UploadFile = File(...),
     nome: str = Form(...),
@@ -57,9 +58,9 @@ async def upload(
 
     result = read_excel(file, taxa_comissao)
 
-    return {
-        "nome": nome,
-        "cpf": cpf,
-        "taxa_comissao": taxa_comissao,
-        "resultado": result
-    }
+    return UploadResponse(
+        nome=nome,
+        cpf=cpf,
+        taxa_comissao=taxa_comissao,
+        resultado=result,
+    )

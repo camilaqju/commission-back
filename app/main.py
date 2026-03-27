@@ -8,7 +8,10 @@ load_dotenv()
 app = FastAPI(
     title="Minha Comissão API",
     description="Exemplo de rotas divididas por domínio.",
-    version="1.0.0"
+    version="1.0.0",
+    # Exponha Swagger/OpenAPI já sob o mesmo prefixo da API v1
+    docs_url="/api/v1/docs",
+    openapi_url="/api/v1/openapi.json",
 )
 origins = [
     "http://localhost:5173",  # seu frontend (Vite)

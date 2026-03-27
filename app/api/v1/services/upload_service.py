@@ -167,6 +167,7 @@ def read_excel(file: UploadFile, taxa_comissao: float) -> dict:
         "filename": file.filename,
         "rows": df.shape[0],
         "columns": df.shape[1],
-        "preview": df.head(5).to_dict(orient="records")
+        # Return all rows to the client (can be large).
+        "preview": df.to_dict(orient="records")
     }
 
