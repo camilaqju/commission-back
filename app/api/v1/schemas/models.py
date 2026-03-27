@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from typing import Any
+from datetime import datetime
+from typing import Any, Literal
 
-from pydantic import BaseModel
+from pydantic import AliasChoices, BaseModel, Field
 
 
 class HealthResponse(BaseModel):
@@ -46,17 +47,46 @@ class CreateUserResponse(BaseModel):
     data: User
 
 
-class UploadExcelPreviewRow(BaseModel):
-    # Rows are dynamic because they depend on the uploaded Excel columns.
-    # We keep it flexible for Swagger/OpenAPI consumers.
-    model_config = {"extra": "allow"}  # allows arbitrary keys
+class UploadExcelRow(BaseModel):
+    """
+    Typing for a single Excel row returned to the client.
+
+    Some original Excel columns contain spaces (e.g. "EMISSAO NF"). We use
+    field aliases so the API can keep the original keys while still being typed.
+    Dynamic parcel columns like `valor_parcela_1` / `mes_parcela_1` are allowed via `extra`.
+    """
+
+    model_config = {
+        "populate_by_name": True,
+        "extra": "allow",
+    }
+
+    nf: int = Field(alias="NF")
+    emissao_nf: datetime | str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("EMISSAO_NF", "EMISSAO NF"),
+        serialization_alias="EMISSAO_NF",
+    )
+    cliente: str | None = Field(default=None, alias="CLIENTE")
+    cond_pgto: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("COND_PGTO", "COND PGTO"),
+        serialization_alias="COND_PGTO",
+    )
+    total: float | int | None = Field(default=None, alias="Total")
+
+    taxa_comissao: float | None = None
+    comissao_calculada: float | None = None
+    prazo_pagamento: list[int] | None = None
+    numero_parcelas: int | Literal["Não encontrado"] | None = None
+    comissao_parcela: float | Literal["Não encontrado"] | None = None
 
 
 class UploadExcelResult(BaseModel):
     filename: str
     rows: int
     columns: int
-    preview: list[dict[str, Any]]
+    preview: list[UploadExcelRow]
 
 
 class UploadResponse(BaseModel):

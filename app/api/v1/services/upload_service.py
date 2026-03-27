@@ -163,6 +163,27 @@ def read_excel(file: UploadFile, taxa_comissao: float) -> dict:
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao ler o arquivo: {e}")
     
+    # =========================
+    # NORMALIZAÇÃO DE SAÍDA (JSON)
+    # =========================
+    # Trim strings and rename columns to API-friendly keys
+    if 'CLIENTE' in df.columns:
+        df['CLIENTE'] = df['CLIENTE'].astype(str).str.strip()
+
+    df = df.rename(
+        columns={
+            "EMISSAO NF": "EMISSAO_NF",
+            "COND PGTO": "COND_PGTO",
+        }
+    )
+
+    # Pandas uses NaN/NaT for missing values, but Pydantic expects None for Optionals.
+    # Also, `prazo_pagamento` should be either a list[int] or None (never NaN float).
+    if "prazo_pagamento" in df.columns:
+        df["prazo_pagamento"] = df["prazo_pagamento"].apply(lambda v: v if isinstance(v, list) else None)
+
+    df = df.where(df.notna(), None)
+
     return {
         "filename": file.filename,
         "rows": df.shape[0],
